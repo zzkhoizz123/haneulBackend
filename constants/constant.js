@@ -1,0 +1,27 @@
+const COMMENT_FLAG = {
+    QandA: 1,
+    REVIEW: 2 
+}
+
+const USER_ROLE = {
+    CUSTOMER: 'C',
+    ADMIN: 'A'
+}
+
+const USER_ACTIVATE = {
+    ativate: 1,
+    inactivate: 2
+}
+
+const ORDER_STATE = {
+    DRAFT: 1,
+    CONFIRMED: 2,
+    CANCELLED: 3
+}
+
+module.exports = {
+    COMMENT_FLAG,
+    USER_ROLE,
+    USER_ACTIVATE,
+    ORDER_STATE
+}

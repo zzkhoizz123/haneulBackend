@@ -1,0 +1,40 @@
+{
+  "name": "Hanuel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "btoa": "^1.2.1",
+    "circular-json": "^0.5.9",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-force-ssl": "^0.3.2",
+    "form-data": "^2.5.1",
+    "helmet": "^3.18.0",
+    "http": "^0.0.0",
+    "http-graceful-shutdown": "^2.3.2",
+    "https": "^1.0.0",
+    "log4js": "^4.0.2",
+    "mongoose": "^5.7.1",
+    "morgan": "^1.9.1",
+    "querystring": "^0.2.0",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.0.7"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  }
+}
