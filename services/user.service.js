@@ -50,7 +50,7 @@ const authenticate = async (username, pass) => {
   try{
     const user = await userModel.findOne({ $and: [{ username }, { password: pass }] })
     if (user.role !== CONSTANTS.USER_ROLE.ADMIN) {
-      if (user.active === false) {
+      if (user.activate === false) {
         throw 'Account is not activate!!!'
       }
     }
