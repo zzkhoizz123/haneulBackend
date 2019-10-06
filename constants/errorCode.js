@@ -40,6 +40,27 @@ const ErrorCode = {
     name: 'DATA_ALDREADY_EXISTED',
     message: 'data aldready existed',
     success: false
+  },
+  DATA_NOT_EXISTED: {
+    status: 200,
+    errorCode: 5,
+    name: 'DATA_NOT_EXISTED',
+    message: 'data not existed',
+    success: false
+  },
+  MISSING_TOKEN: {
+    status: 200,
+    errorCode: 6,
+    name: 'MISSING_TOKEN',
+    message: 'missing token',
+    success: false
+  },
+  DO_NOT_HAVE_PERMISSION: {
+    status: 200,
+    errorCode: 7,
+    name: 'DO_NOT_HAVE_PERMISSION',
+    message: 'do not have permission',
+    success: false
   }
 }
 

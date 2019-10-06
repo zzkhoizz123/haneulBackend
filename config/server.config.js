@@ -1,9 +1,8 @@
-const providerUsername = 'DoiTac'
-const providerPassword = 'fdsaofid435f88diogmnr659098fs032aa88agfg888f88fgfds'
-const providerAPI_URL = 'http://crm.fservices.com.vn/APIs/APIMobileHandler.ashx'
+
+const privateKeyToken = 'hanuel-hello'
+const expiredToken = '30d'
 
 module.exports = {
-  providerUsername,
-  providerPassword,
-  providerAPI_URL
+  privateKeyToken,
+  expiredToken
 }

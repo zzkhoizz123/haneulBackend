@@ -19,9 +19,17 @@ const ORDER_STATE = {
     CANCELLED: 3
 }
 
+const APPEARANCE = 1
+const DISAPPEARANCE = 0
+
+const LIMIT_QUERY = 1000
+
 module.exports = {
     COMMENT_FLAG,
     USER_ROLE,
     USER_ACTIVATE,
-    ORDER_STATE
+    ORDER_STATE,
+    APPEARANCE,
+    DISAPPEARANCE,
+    LIMIT_QUERY
 }

@@ -1,20 +1,23 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const CONSTANT = require('../constants/constant')
 
 const Schema = mongoose.Schema
 
-const customerSchema = new Schema({
-  username: {},
+const userSchema = new Schema({
+  username: { type: String, unique: true },
   password: {},
-  activate: {}, // true or falses
-  role: {} // C: customer, A: admin
+  address: {},
+  phone: {},
+  activate: { type: Boolean, default: true }, // true or falses
+  role: { type: String, default:CONSTANT.USER_ROLE.CUSTOMER } // C: customer, A: admin
 })
 
-customerSchema.methods.isValidPassword = async function (password) {
-  const customer = this
+userSchema.methods.isValidPassword = async function (password) {
+  const user = this
   // Hashes the password sent by the user for login and checks if the hashed password stored in the
   // database matches the one sent. Returns true if it does else false.
-  const compare = await bcrypt.compare(password, customer.password)
+  const compare = await bcrypt.compare(password, user.password)
   return compare
 }
 
@@ -31,4 +34,4 @@ customerSchema.methods.isValidPassword = async function (password) {
 //   // Indicates we're done and moves on to the next middlewares
 //   next()
 // })
-module.exports = mongoose.model('customer', customerSchema, 'Customer')
+module.exports = mongoose.model('user', userSchema, 'User')
