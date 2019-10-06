@@ -58,7 +58,7 @@ const getCategory = async (req, res) => {
       console.log(err)
       RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
     }
-  }
+}
 module.exports = {
     createCategory,
     getAllCategory,

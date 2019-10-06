@@ -49,6 +49,11 @@ const createAccount = async (userInfo) => {
 const authenticate = async (username, pass) => {
   try{
     const user = await userModel.findOne({ $and: [{ username }, { password: pass }] })
+    if (user.role !== CONSTANTS.USER_ROLE.ADMIN) {
+      if (user.active === false) {
+        throw 'Account is not activate!!!'
+      }
+    }
     if (!user) {
       throw 'User is not existed !!!'
     }
