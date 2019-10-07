@@ -4,7 +4,7 @@ const ObjectId = require('bson').ObjectId;
 // Import tools
 const  ERRORCODE = require('../constants/errorCode')
 const CONSTANTS = require('../constants/constant')
-const productVarianModel = require('../models/product.model')
+const productVarianModel = require('../models/productVarian.model')
 
 const create = async (cropInfo) => {
   const data = await productVarianModel.create(cropInfo)
@@ -13,7 +13,7 @@ const create = async (cropInfo) => {
 
 const update = async (query, newInfo) => {
   const data = await productVarianModel.findOneAndUpdate(query, { $set: newInfo }, { newc: true })
-  return data
+  return
 }
 
 const checkExist = async (query) => {

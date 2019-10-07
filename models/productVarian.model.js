@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const productVarianSchema = new Schema({
-  varian: {}, // [color, size]
+  color: {},
+  size: {},
   stock: {}, 
   price: {}
 }, { timestamps: true })

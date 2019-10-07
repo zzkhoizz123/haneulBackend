@@ -37,6 +37,9 @@ const getAllCategory = async (req, res) => {
 
 const addSubToCategory = async (req, res) => {
     try {
+        if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
+          RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+        }
         const subcategoryId = req.body.subcategoryId
         const categoryId = req.body.categoryId
         const category = await categoryService.addSubToCategory(subcategoryId, categoryId)
