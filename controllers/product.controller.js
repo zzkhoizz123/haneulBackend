@@ -35,6 +35,13 @@ const createProduct = async (req, res) => {
     }
     const product = await productService.create(productTemp)
 
+    for (const item in varianList) {
+      await productVarianService.update(
+        {_id: new ObjectId(varianList[item])},
+        { $set: { productID: product._id}}
+      )
+    }
+
     ERRORCODE.SUCCESSFUL.data = product
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {

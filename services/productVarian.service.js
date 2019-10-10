@@ -11,8 +11,8 @@ const create = async (cropInfo) => {
   return data
 }
 
-const update = async (query, newInfo) => {
-  const data = await productVarianModel.findOneAndUpdate(query, { $set: newInfo }, { newc: true })
+const update = async (query, query2) => {
+  const data = await productVarianModel.findOneAndUpdate(query, query2, { newc: true })
   return
 }
 

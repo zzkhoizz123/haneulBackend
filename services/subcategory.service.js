@@ -12,7 +12,7 @@ const create = async (cropInfo) => {
 
 const update = async (query, newInfo) => {
   const data = await subcategoryModel.findOneAndUpdate(query, { $set: newInfo }, { newc: true })
-  return data
+  return
 }
 
 const checkExist = async (query) => {

@@ -6,7 +6,8 @@ const productVarianSchema = new Schema({
   color: {},
   size: {},
   stock: {}, 
-  price: {}
+  price: {},
+  productID: {}
 }, { timestamps: true })
 
 

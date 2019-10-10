@@ -1,14 +1,16 @@
 const mongoose = require('mongoose')
+const CONSTANT = require('../constants/constant')
 
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
   customerID: {},
-  productionID: {}, // [list product],
-  state: {}, // 1: draft, 2: confirm, 3: cancelled
+  productVarianID: {}, // [list product varian],
+  state: { type: Number, default: CONSTANT.ORDER_STATE.DRAFT }, // 1: draft, 2: confirm, 3: cancelled
   phoneNumber: {},
   address: {},
-  message: {}
+  message: {},
+  totalPrice: {}
 }, { timestamps: true })
 
 module.exports = mongoose.model('order', orderSchema, 'Order')

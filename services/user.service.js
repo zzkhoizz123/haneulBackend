@@ -3,7 +3,7 @@ const CONSTANTS = require('../constants/constant')
 const tokenAuthen = require('../util/tokenAuthen')
 
 // Import tools
-const  ERROR = require('../constants/errorCode')
+const  ERRORCODE = require('../constants/errorCode')
 const userModel = require('../models/user.model')
 
 const create = async (cropInfo) => {
@@ -13,7 +13,7 @@ const create = async (cropInfo) => {
 
 const update = async (query, newInfo) => {
   const data = await userModel.findOneAndUpdate(query, { $set: newInfo }, { newc: true })
-  // return data
+  return
 }
 
 const checkExist = async (query) => {

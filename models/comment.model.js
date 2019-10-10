@@ -7,8 +7,7 @@ const commentSchema = new Schema({
   flag: {}, // 1: Q&A, 2: review
   userID: {},
   productID: {},
-  commentID: {}, // [list comment],
-  rateID: {}  
+  commentParentID: {}, // comment parent
 }, { timestamps: true })
 
 module.exports = mongoose.model('comment', commentSchema, 'Comment')
