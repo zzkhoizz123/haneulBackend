@@ -8,7 +8,7 @@ const productVarianService = require('../services/productVarian.service')
 const getProductVarian = async (req, res) => {
   try {
     const varianId = req.query.varianId
-    const varian = await productVarianService.getDetail({_id: new ObjectId(varianId)})
+    const varian = await productVarianService.getDetail({ _id: new ObjectId(varianId) })
     ERRORCODE.SUCCESSFUL.data = varian
     RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {
@@ -18,5 +18,5 @@ const getProductVarian = async (req, res) => {
 }
 
 module.exports = {
-    getProductVarian
+  getProductVarian
 }

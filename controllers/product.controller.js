@@ -1,4 +1,4 @@
-const ObjectId = require('bson').ObjectId;
+const ObjectId = require('bson').ObjectId
 const RESPONSE = require('../middlewares/response')
 const ERRORCODE = require('../constants/errorCode')
 const CONSTANT = require('../constants/constant')
@@ -9,7 +9,7 @@ const productVarianService = require('../services/productVarian.service')
 const createProduct = async (req, res) => {
   try {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
-        return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const varianInfo = req.body.varian // list varian
     const varianList = []
@@ -37,8 +37,8 @@ const createProduct = async (req, res) => {
 
     for (const item in varianList) {
       await productVarianService.update(
-        {_id: new ObjectId(varianList[item])},
-        { $set: { productID: product._id}}
+        { _id: new ObjectId(varianList[item]) },
+        { $set: { productID: product._id } }
       )
     }
 
@@ -53,19 +53,19 @@ const createProduct = async (req, res) => {
 const addSubcategory = async (req, res) => {
   try {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
-        return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const productId = req.body.productId
     const subId = req.body.subId
 
-    const isExisted = await productService.checkExist({ subcategoryID: subId })
+    const isExisted = await productService.checkExist({ subcategoryID: new ObjectId(subId) })
     if (isExisted) {
       return RESPONSE.message(res, ERRORCODE.DATA_ALDREADY_EXISTED)
     }
-    
+
     await productService.update(
       { _id: new ObjectId(productId) },
-      { $push: { subcategoryID: subId } }
+      { $push: { subcategoryID: new ObjectId(subId) } }
     )
 
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
@@ -78,19 +78,19 @@ const addSubcategory = async (req, res) => {
 const addTag = async (req, res) => {
   try {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
-        return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const productId = req.body.productId
     const tagId = req.body.tagId
 
-    const isExisted = await productService.checkExist({ tagID: tagId })
+    const isExisted = await productService.checkExist({ tagID: ObjectId(tagId) })
     if (isExisted) {
       return RESPONSE.message(res, ERRORCODE.DATA_ALDREADY_EXISTED)
     }
-    
+
     await productService.update(
       { _id: new ObjectId(productId) },
-      { $push: { tagID: tagId } }
+      { $push: { tagID: new ObjectId(tagId) } }
     )
 
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
@@ -103,7 +103,7 @@ const addTag = async (req, res) => {
 const addVarian = async (req, res) => {
   try {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
-        return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const productId = req.body.productId
     const varianInfo = req.body.varianInfo
@@ -114,7 +114,7 @@ const addVarian = async (req, res) => {
       stock: varianInfo.stock,
       price: varianInfo.price
     })
-    
+
     await productService.update(
       { _id: new ObjectId(productId) },
       { $push: { productVarianID: varian._id } }
@@ -129,10 +129,9 @@ const addVarian = async (req, res) => {
 
 const getProductByTime = async (req, res) => {
   try {
-
     const productList = await productService.getList(
       {},
-      { name: CONSTANT.APPEARANCE, description:CONSTANT.APPEARANCE, picture:CONSTANT.APPEARANCE },
+      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, picture: CONSTANT.APPEARANCE }
     )
 
     ERRORCODE.SUCCESSFUL.data = productList
@@ -176,14 +175,13 @@ const getProductByTag = async (req, res) => {
   }
 }
 
-
 module.exports = {
-    createProduct,
-    getProductByTime,
-    getProductById,
-    getProductBySubcategory,
-    getProductByTag,
-    addSubcategory,
-    addTag,
-    addVarian
+  createProduct,
+  getProductByTime,
+  getProductById,
+  getProductBySubcategory,
+  getProductByTag,
+  addSubcategory,
+  addTag,
+  addVarian
 }

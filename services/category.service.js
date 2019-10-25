@@ -5,6 +5,7 @@ const ObjectId = require('bson').ObjectId;
 const  ERRORCODE = require('../constants/errorCode')
 const CONSTANTS = require('../constants/constant')
 const categoryModel = require('../models/category.model')
+const subcategoryModel = require('../models/subcategory.model')
 
 const create = async (cropInfo) => {
   const data = await categoryModel.create(cropInfo)
@@ -37,6 +38,24 @@ const addSubToCategory = async (subcategoryId, categoryId) => {
         { $push: {subList: subcategoryId} },
     )
 }
+const getAllCategory = async () => {
+  const cateLst = await categoryModel.find({})
+  const lst = []
+  console.log(cateLst)
+  for (let item in cateLst) {
+    let obj = {
+      id: cateLst[item]._id,
+      name: cateLst[item].name,
+      subList: []
+    }
+    for (let item2 in cateLst[item].subList) {
+      const sub = await subcategoryModel.findById(new ObjectId(cateLst[item].subList[item2]))
+      obj.subList.push(sub)
+    }
+    lst.push(obj)
+  }
+  return lst
+}
 
 module.exports = {
     create,
@@ -44,5 +63,6 @@ module.exports = {
     checkExist,
     getDetail,
     getList,
-    addSubToCategory
+    addSubToCategory,
+    getAllCategory
 }

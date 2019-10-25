@@ -10,7 +10,7 @@ const userSchema = new Schema({
   address: {},
   phone: {},
   activate: { type: Boolean, default: true }, // true or falses
-  role: { type: String, default:CONSTANT.USER_ROLE.CUSTOMER } // C: customer, A: admin
+  role: { type: String, default: CONSTANT.USER_ROLE.CUSTOMER } // C: customer, A: admin
 })
 
 userSchema.methods.isValidPassword = async function (password) {

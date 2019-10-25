@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const ObjectId = require('bson').ObjectId;
+const ObjectId = require('bson').ObjectId
 
 const serverConfig = require('../config/server.config')
 const RESPONSE = require('../middlewares/response')
@@ -37,7 +37,7 @@ const signup = async (req, res) => {
     }
 
     const customerInfo = {
-      username, 
+      username,
       password
     }
 
@@ -73,8 +73,8 @@ const editProfile = async (req, res) => {
       ERRORCODE.SUCCESSFUL.data = update
     }
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
-  }catch (error) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
@@ -84,16 +84,16 @@ const changePassword = async (req, res) => {
     const username = req.body.username
     const password = req.body.password
     const newPass = req.body.newPass
-    
-    const user = await userService.getDetail({ $and: [ { username }, { password }]})
+
+    const user = await userService.getDetail({ $and: [{ username }, { password }] })
     if (!user) {
       return RESPONSE.message(res, ERRORCODE.DATA_NOT_EXISTED)
     }
 
-    await userService.update({ username: username }, {password: newPass})
+    await userService.update({ username: username }, { password: newPass })
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
-  }catch (error) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
@@ -104,11 +104,11 @@ const activateAccount = async (req, res) => {
       RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const userid = req.body.userid
-    await userService.update({ _id: new ObjectId(userid) }, {activate: true})
-    
+    await userService.update({ _id: new ObjectId(userid) }, { activate: true })
+
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
-  }catch (error) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
@@ -119,11 +119,11 @@ const deactivateAccount = async (req, res) => {
       RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const userid = req.body.userid
-    await userService.update({ _id: new ObjectId(userid) }, {activate: false})
-    
+    await userService.update({ _id: new ObjectId(userid) }, { activate: false })
+
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
-  }catch (error) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
@@ -133,11 +133,11 @@ const getListUser = async (req, res) => {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
       RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
-    const userList = await userService.getList({ role: CONSTANT.USER_ROLE.ADMIN },{ password: CONSTANT.DISAPPEARANCE })
+    const userList = await userService.getList({ role: CONSTANT.USER_ROLE.ADMIN }, { password: CONSTANT.DISAPPEARANCE })
     ERRORCODE.SUCCESSFUL.data = userList
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
-  }catch (error) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }

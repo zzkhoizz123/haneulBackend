@@ -1,8 +1,8 @@
 'use strict'
-const ObjectId = require('bson').ObjectId;
+const ObjectId = require('bson').ObjectId
 
 // Import tools
-const  ERRORCODE = require('../constants/errorCode')
+const ERRORCODE = require('../constants/errorCode')
 const CONSTANTS = require('../constants/constant')
 const productModel = require('../models/product.model')
 const subcategoryModel = require('../models/subcategory.model')
@@ -16,7 +16,7 @@ const create = async (cropInfo) => {
 
 const update = async (query, query2) => {
   await productModel.findOneAndUpdate(query, query2, { newc: true })
-  return
+  
 }
 
 const checkExist = async (query) => {
@@ -40,18 +40,18 @@ const getProductById = async (id) => {
     const subcategoryID = product.subcategoryID
     const tagID = product.tagID
     const productVarianID = product.productVarianID
-  
+
     const subcategoryList = []
     const tagList = []
     const productVarianList = []
-  
-    for (let item in subcategoryID) {
+
+    for (const item in subcategoryID) {
       subcategoryList.push(await subcategoryModel.findById(subcategoryID[item]))
     }
-    for (let item in tagID) {
+    for (const item in tagID) {
       tagList.push(await tagModel.findById(tagID[item]))
     }
-    for (let item in productVarianID) {
+    for (const item in productVarianID) {
       productVarianList.push(await productVarianModel.findById(productVarianID[item]))
     }
 
@@ -71,8 +71,8 @@ const getProductById = async (id) => {
 
 const getProductBySubcategory = async (subcategoryID) => {
   try {
-    const product = productModel.find({ subcategoryID: subcategoryID })
-    ERRORCODE.SUCCESSFUL.data = product 
+    const product = productModel.find({ subcategoryID: new ObjectId(subcategoryID) })
+    ERRORCODE.SUCCESSFUL.data = product
     return ERRORCODE.SUCCESSFUL
   } catch (error) {
     return ERRORCODE.ERROR_SERVER
@@ -81,8 +81,8 @@ const getProductBySubcategory = async (subcategoryID) => {
 
 const getProductByTag = async (tagID) => {
   try {
-    const product = productModel.find({ tagID: tagID })
-    ERRORCODE.SUCCESSFUL.data = product 
+    const product = productModel.find({ tagID: new ObjectId(tagID) })
+    ERRORCODE.SUCCESSFUL.data = product
     return ERRORCODE.SUCCESSFUL
   } catch (error) {
     return ERRORCODE.ERROR_SERVER
@@ -90,12 +90,12 @@ const getProductByTag = async (tagID) => {
 }
 
 module.exports = {
-    create,
-    update,
-    checkExist,
-    getDetail,
-    getList,
-    getProductById,
-    getProductBySubcategory,
-    getProductByTag
+  create,
+  update,
+  checkExist,
+  getDetail,
+  getList,
+  getProductById,
+  getProductBySubcategory,
+  getProductByTag
 }
