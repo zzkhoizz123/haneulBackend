@@ -23,7 +23,7 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^4.0.2",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "querystring": "^0.2.0",
     "swagger-jsdoc": "^3.4.0",
