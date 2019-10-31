@@ -58,14 +58,14 @@ const addSubcategory = async (req, res) => {
     const productId = req.body.productId
     const subId = req.body.subId
 
-    const isExisted = await productService.checkExist({ subcategoryID: new ObjectId(subId) })
+    const isExisted = await productService.checkExist({ subcategoryID: subId })
     if (isExisted) {
       return RESPONSE.message(res, ERRORCODE.DATA_ALDREADY_EXISTED)
     }
 
     await productService.update(
       { _id: new ObjectId(productId) },
-      { $push: { subcategoryID: new ObjectId(subId) } }
+      { $push: { subcategoryID: subId } }
     )
 
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
@@ -175,6 +175,43 @@ const getProductByTag = async (req, res) => {
   }
 }
 
+const updateProduct = async (req, res) => {
+  try {
+    if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+    }
+    const { name, description, picture, productId} = req.body
+    let update = {}
+    if (name) update.name = name
+    if (description) update.description = description
+    if (picture) update.picture = picture
+
+    await productService.update({ _id: new ObjectId(productId) }, { $set: update })
+    RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
+
+const removeProduct = async (req, res) => {
+  try {
+    if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
+      return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+    }
+    const { productId } = req.body
+    if (!productId) {
+      return RESPONSE.message(res, ERRORCODE.MISSING_FIELD)
+    }
+
+    const result = await productService.removeProduct(productId)
+    return RESPONSE.message(res, result)
+  } catch (err) {
+    console.log(err)
+    return RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
 module.exports = {
   createProduct,
   getProductByTime,
@@ -183,5 +220,7 @@ module.exports = {
   getProductByTag,
   addSubcategory,
   addTag,
-  addVarian
+  addVarian,
+  updateProduct,
+  removeProduct
 }

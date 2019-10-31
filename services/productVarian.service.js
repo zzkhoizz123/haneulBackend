@@ -5,6 +5,7 @@ const ObjectId = require('bson').ObjectId;
 const  ERRORCODE = require('../constants/errorCode')
 const CONSTANTS = require('../constants/constant')
 const productVarianModel = require('../models/productVarian.model')
+const productModel = require('../models/product.model')
 
 const create = async (cropInfo) => {
   const data = await productVarianModel.create(cropInfo)
@@ -12,8 +13,26 @@ const create = async (cropInfo) => {
 }
 
 const update = async (query, query2) => {
-  const data = await productVarianModel.findOneAndUpdate(query, query2, { newc: true })
+  const data = await productVarianModel.update(query, query2)
   return
+}
+
+const removeVarian = async (varianId) => {
+  try {
+    await productModel.update({ productVarianID: new ObjectId(varianId) }, {
+      $pull: {
+        productVarianID: new ObjectId(varianId)
+      },
+    },
+      { multi: true }
+    )
+    
+    await productVarianModel.remove({ _id: new ObjectId(varianId) })
+    return ERRORCODE.SUCCESSFUL
+  }
+  catch(error) {
+    return ERRORCODE.ERROR_SERVER
+  }
 }
 
 const checkExist = async (query) => {
@@ -36,5 +55,6 @@ module.exports = {
     update,
     checkExist,
     getDetail,
-    getList
+    getList,
+    removeVarian
 }

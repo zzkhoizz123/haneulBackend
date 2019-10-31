@@ -1,12 +1,15 @@
 'use strict'
+const ObjectId = require('bson').ObjectId;
+
 const CONSTANTS = require('../constants/constant')
 
 // Import tools
 const  ERRORCODE = require('../constants/errorCode')
 const subcategoryModel = require('../models/subcategory.model')
+const categoryModel = require('../models/category.model')
 
-const create = async (cropInfo) => {
-  const data = await subcategoryModel.create(cropInfo)
+const create = async (Info) => {
+  const data = await subcategoryModel.create(Info)
   return data
 }
 
@@ -30,10 +33,40 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
   return data
 }
 
+const updateSubcategory = async (subcategoryid, subcategoryName) => {
+  try {
+    await subcategoryModel.update({ _id: new ObjectId(subcategoryid) }, { name: subcategoryName })
+    return ERRORCODE.SUCCESSFUL
+  }
+  catch(error) {
+    return ERRORCODE.ERROR_SERVER
+  }
+}
+
+const removeSubcategory = async (subcategoryid) => {
+  try {
+    await categoryModel.update({ subList: new ObjectId(subcategoryid) }, {
+      $pull: {
+        subList: new ObjectId(subcategoryid)
+      },
+    },
+      { multi: true }
+    )
+    
+    await subcategoryModel.remove({ _id: new ObjectId(subcategoryid) })
+    return ERRORCODE.SUCCESSFUL
+  }
+  catch(error) {
+    return ERRORCODE.ERROR_SERVER
+  }
+}
+
 module.exports = {
     create,
     update,
     checkExist,
     getDetail,
-    getList
+    getList,
+    updateSubcategory,
+    removeSubcategory
 }

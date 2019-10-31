@@ -4,6 +4,7 @@ const ERRORCODE = require('../constants/errorCode')
 const CONSTANT = require('../constants/constant')
 
 const orderService = require('../services/order.service')
+const productVarianService = require('../services/productVarian.service')
 
 const createOrder = async (req, res) => {
   try {
@@ -17,6 +18,10 @@ const createOrder = async (req, res) => {
       message: message,
       totalPrice: totalPrice
     })
+
+    if (data) {
+      await productVarianService.update({ _id: new ObjectId(productVarianID) }, { $inc: { stock: -1 } })
+    }
 
     ERRORCODE.SUCCESSFUL.data = data
     RESPONSE.message(res, ERRORCODE.SUCCESSFUL)

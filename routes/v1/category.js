@@ -9,5 +9,6 @@ router.route('/').post(authenMiddleware.verifyToken, categoryController.createCa
 router.route('/').get(categoryController.getCategory)
 router.route('/getAll').get(categoryController.getAllCategory)
 router.route('/addSubToCategory').post(authenMiddleware.verifyToken, categoryController.addSubToCategory)
-
+router.route('/update').post(authenMiddleware.verifyToken, categoryController.updateCategory)
+router.route('/remove').post(authenMiddleware.verifyToken, categoryController.removeCategory)
 module.exports = router

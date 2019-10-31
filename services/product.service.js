@@ -15,7 +15,7 @@ const create = async (cropInfo) => {
 }
 
 const update = async (query, query2) => {
-  await productModel.findOneAndUpdate(query, query2, { newc: true })
+  await productModel.update(query, query2)
   
 }
 
@@ -89,6 +89,24 @@ const getProductByTag = async (tagID) => {
   }
 }
 
+const removeProduct = async (productid) => {
+  try {
+    const product = await productModel.findOne({ _id: new ObjectId(productid) })
+    if (!product) {
+      return ERRORCODE.DATA_NOT_EXISTED
+    }
+    
+    for (let item in product.productVarianID) {
+      await productVarianModel.remove({ _id: product.productVarianID[item] })
+    }
+
+    await productModel.remove({ _id: new ObjectId(productid) })
+    return ERRORCODE.SUCCESSFUL
+  } catch (error) {
+    return ERRORCODE.ERROR_SERVER
+  }
+}
+
 module.exports = {
   create,
   update,
@@ -97,5 +115,6 @@ module.exports = {
   getList,
   getProductById,
   getProductBySubcategory,
-  getProductByTag
+  getProductByTag,
+  removeProduct
 }

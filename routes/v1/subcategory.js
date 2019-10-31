@@ -9,5 +9,7 @@ router.route('/').post(authenMiddleware.verifyToken, subcategoryController.creat
 router.route('/').get(subcategoryController.getSubcategory)
 router.route('/getAll').get(subcategoryController.getAllSubcategory)
 router.route('/getMany').post(subcategoryController.getManySubcategory)
+router.route('/update').post(authenMiddleware.verifyToken, subcategoryController.updateSubcategory)
+router.route('/remove').post(authenMiddleware.verifyToken, subcategoryController.removeSubcategory)
 
 module.exports = router

@@ -35,8 +35,9 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
 const addSubToCategory = async (subcategoryId, categoryId) => {
     const data = await categoryModel.findByIdAndUpdate(
         {_id: new ObjectId(categoryId)},
-        { $push: {subList: subcategoryId} },
+        { $push: { subList: new ObjectId(subcategoryId) } },
     )
+    return data
 }
 const getAllCategory = async () => {
   const cateLst = await categoryModel.find({})
@@ -57,6 +58,26 @@ const getAllCategory = async () => {
   return lst
 }
 
+const removeCategory = async (categoryid) => {
+  const category = await categoryModel.findOne({ _id: new ObjectId(categoryid) })
+  if (!category) {
+    return ERRORCODE.DATA_NOT_EXISTED
+  }
+  
+  for (let item in category.subList) {
+    await subcategoryModel.remove({_id: new ObjectId(category.subList[item])})
+  }
+
+  await categoryModel.remove({ _id: new ObjectId(categoryid) })
+  return ERRORCODE.SUCCESSFUL
+}
+
+const updateCategory= async (categoryid, categoryName) => {
+  await categoryModel.update({ _id: new ObjectId(categoryid) }, { name: categoryName })
+
+  return ERRORCODE.SUCCESSFUL
+}
+
 module.exports = {
     create,
     update,
@@ -64,5 +85,7 @@ module.exports = {
     getDetail,
     getList,
     addSubToCategory,
-    getAllCategory
+    getAllCategory,
+    updateCategory,
+    removeCategory
 }

@@ -9,15 +9,6 @@
 //   process.env.MONGODB_URI ||
 //   `mongodb://${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DATABASE}`
 
-// module.exports = {
-//   MONGODB_HOST,
-//   MONGODB_PORT,
-//   MONGODB_DATABASE,
-//   MONGODB_USERNAME,
-//   MONGODB_PASSWORD,
-//   MONGODB_OPTION,
-//   MONGODB_URI
-// }
 const MONGODB_URI = 'mongodb+srv://hanuel:hanuel123@hanuel-7bafb.mongodb.net/test'
  module.exports = {
   MONGODB_URI

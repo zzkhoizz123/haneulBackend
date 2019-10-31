@@ -62,9 +62,44 @@ const getManySubcategory = async (req, res) => {
   }
 }
 
+const updateSubcategory = async (req, res) => {
+  try {
+    if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
+      RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+    }
+    const { subcategoryid, subcategoryName } = req.body
+    
+    const result = await subcategoryService.updateSubcategory(subcategoryid, subcategoryName)
+
+    RESPONSE.message(res, result)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
+const removeSubcategory = async (req, res) => {
+  try {
+    if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
+      RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
+    }
+    const { subcategoryid } = req.body
+    
+    const result = await subcategoryService.removeSubcategory(subcategoryid)
+
+    RESPONSE.message(res, result)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
+
 module.exports = {
   createSubcategory,
   getAllSubcategory,
   getManySubcategory,
-  getSubcategory
+  getSubcategory,
+  updateSubcategory,
+  removeSubcategory
 }

@@ -21,4 +21,8 @@ router.route('/getProductBySubcategory').get(productController.getProductBySubca
 
 router.route('/getProductByTag').get(productController.getProductByTag)
 
+router.route('/update').post(authenMiddleware.verifyToken, productController.updateProduct)
+
+router.route('/remove').post(authenMiddleware.verifyToken, productController.removeProduct)
+
 module.exports = router
