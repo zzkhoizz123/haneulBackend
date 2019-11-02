@@ -16,7 +16,7 @@ const create = async (cropInfo) => {
 
 const update = async (query, query2) => {
   await productModel.update(query, query2)
-  
+  return
 }
 
 const checkExist = async (query) => {

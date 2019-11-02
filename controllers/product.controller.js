@@ -5,6 +5,7 @@ const CONSTANT = require('../constants/constant')
 
 const productService = require('../services/product.service')
 const productVarianService = require('../services/productVarian.service')
+const uploadCloudinary = require('../util/cloudiany.util')
 
 const createProduct = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ const createProduct = async (req, res) => {
       return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const varianInfo = req.body.varian // list varian
+    const images = req.body.images // list images
     const varianList = []
 
     for (const item in varianInfo) {
@@ -28,7 +30,6 @@ const createProduct = async (req, res) => {
     const productTemp = {
       name: req.body.name,
       description: req.body.description,
-      picture: req.body.picture,
       subcategoryID: req.body.subcategory,
       tagID: req.body.tag,
       productVarianID: varianList
@@ -42,6 +43,12 @@ const createProduct = async (req, res) => {
       )
     }
 
+    let exec = []
+    for (const item in images) {
+      const result = await uploadCloudinary.decompressLZUTF8AndUploadStreamImage(product._id, images[item])
+      exec.push(result)
+    }
+    await productService.update({ _id: product._id }, { imageURL: exec })
     ERRORCODE.SUCCESSFUL.data = product
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {
@@ -131,7 +138,7 @@ const getProductByTime = async (req, res) => {
   try {
     const productList = await productService.getList(
       {},
-      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, picture: CONSTANT.APPEARANCE }
+      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, imageURL: CONSTANT.APPEARANCE }
     )
 
     ERRORCODE.SUCCESSFUL.data = productList

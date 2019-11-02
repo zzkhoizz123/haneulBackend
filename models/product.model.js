@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
   name: {},
   description: {},
-  picture: {},
+  imageURL: {}, // list url
   subcategoryID: {}, // [list sub]
   tagID: {}, // [list tag]
   productVarianID: {} // [list varian]

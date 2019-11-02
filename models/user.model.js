@@ -11,7 +11,7 @@ const userSchema = new Schema({
   phone: {},
   activate: { type: Boolean, default: true }, // true or falses
   role: { type: String, default: CONSTANT.USER_ROLE.CUSTOMER } // C: customer, A: admin
-})
+}, { timestamps: true })
 
 userSchema.methods.isValidPassword = async function (password) {
   const user = this
