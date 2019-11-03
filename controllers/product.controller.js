@@ -138,7 +138,7 @@ const getProductByTime = async (req, res) => {
   try {
     const productList = await productService.getList(
       {},
-      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, imageURL: CONSTANT.APPEARANCE }
+      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, imageURL: CONSTANT.APPEARANCE, createdAt: CONSTANT.APPEARANCE, updateAt: CONSTANT.APPEARANCE }
     )
 
     ERRORCODE.SUCCESSFUL.data = productList
