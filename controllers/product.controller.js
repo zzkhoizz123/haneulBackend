@@ -136,10 +136,7 @@ const addVarian = async (req, res) => {
 
 const getProductByTime = async (req, res) => {
   try {
-    const productList = await productService.getList(
-      {},
-      { name: CONSTANT.APPEARANCE, description: CONSTANT.APPEARANCE, imageURL: CONSTANT.APPEARANCE, createdAt: CONSTANT.APPEARANCE, updateAt: CONSTANT.APPEARANCE }
-    )
+    const productList = await productService.getList({})
 
     ERRORCODE.SUCCESSFUL.data = productList
     RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
