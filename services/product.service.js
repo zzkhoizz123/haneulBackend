@@ -36,7 +36,7 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
 
 const getProductById = async (id) => {
   try {
-    const product = await productModel.findById(id)
+    const product = await productModel.findOne({ _id: new ObjectId(id) })
     const subcategoryID = product.subcategoryID
     const tagID = product.tagID
     const productVarianID = product.productVarianID
@@ -46,10 +46,10 @@ const getProductById = async (id) => {
     const productVarianList = []
 
     for (const item in subcategoryID) {
-      subcategoryList.push(await subcategoryModel.findById(subcategoryID[item]))
+      subcategoryList.push(await subcategoryModel.findOne({ _id: new ObjectId(subcategoryID[item]) }))
     }
     for (const item in tagID) {
-      tagList.push(await tagModel.findById(tagID[item]))
+      tagList.push(await tagModel.findOne({ _id: new ObjectId(tagID[item]) }))
     }
     for (const item in productVarianID) {
       productVarianList.push(await productVarianModel.findById(productVarianID[item]))
@@ -65,6 +65,7 @@ const getProductById = async (id) => {
     }
     return ERRORCODE.SUCCESSFUL
   } catch (error) {
+    console.log(eror)
     return ERRORCODE.ERROR_SERVER
   }
 }
@@ -107,6 +108,29 @@ const removeProduct = async (productid) => {
   }
 }
 
+const getProductByTime = async (productid) => {
+  try {
+    const products = await productModel.find({})
+    
+    for (let item in products) {
+      const product = products[item]
+      let lst = []
+      for (let item2 in product.productVarianID) {
+        const productVarian = await productVarianModel.findOne({ _id: product.productVarianID[item2] })
+        lst.push(productVarian)
+      }
+      products[item].productVarianID = lst
+    }
+
+    ERRORCODE.SUCCESSFUL.data = products
+    return ERRORCODE.SUCCESSFUL
+  } catch (error) {
+    console.log(error)
+    return ERRORCODE.ERROR_SERVER
+  }
+}
+
+
 module.exports = {
   create,
   update,
@@ -116,5 +140,6 @@ module.exports = {
   getProductById,
   getProductBySubcategory,
   getProductByTag,
-  removeProduct
+  removeProduct,
+  getProductByTime
 }

@@ -136,10 +136,9 @@ const addVarian = async (req, res) => {
 
 const getProductByTime = async (req, res) => {
   try {
-    const productList = await productService.getList({})
+    const result = await productService.getProductByTime({})
 
-    ERRORCODE.SUCCESSFUL.data = productList
-    RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+    RESPONSE.message(res, result)
   } catch (err) {
     console.log(err)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
@@ -149,6 +148,7 @@ const getProductByTime = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const id = req.query.id
+    console.log(id)
     const result = await productService.getProductById(id)
     RESPONSE.message(res, result)
   } catch (err) {
