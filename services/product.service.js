@@ -110,16 +110,17 @@ const removeProduct = async (productid) => {
 
 const getProductByTime = async (productid) => {
   try {
-    const products = await productModel.find({})
+    const products = await productModel.find({}).lean()
     
     for (let item in products) {
+      products[item].productVarianData = []
       const product = products[item]
-      let lst = []
+      const lst = []
       for (let item2 in product.productVarianID) {
         const productVarian = await productVarianModel.findOne({ _id: product.productVarianID[item2] })
         lst.push(productVarian)
       }
-      products[item].productVarianID = lst
+      products[item].productVarian = lst
     }
 
     ERRORCODE.SUCCESSFUL.data = products
