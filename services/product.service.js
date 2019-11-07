@@ -113,14 +113,16 @@ const getProductByTime = async (productid) => {
     const products = await productModel.find({}).lean()
     
     for (let item in products) {
-      products[item].productVarianData = []
       const product = products[item]
-      const lst = []
+      let stock = 0
+      let averagePrice = 0
       for (let item2 in product.productVarianID) {
         const productVarian = await productVarianModel.findOne({ _id: product.productVarianID[item2] })
-        lst.push(productVarian)
+        averagePrice += parseInt(productVarian.price)
+        stock += parseInt(productVarian.stock)
       }
-      products[item].productVarian = lst
+      products[item].averagePrice = averagePrice / products[item].productVarianID.length
+      products[item].stock = stock
     }
 
     ERRORCODE.SUCCESSFUL.data = products
