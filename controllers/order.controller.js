@@ -73,7 +73,15 @@ const getOrder = async (req, res) => {
   try {
     const orderId = req.query.orderId
     const customerId = req.id
-    const data = await orderService.getOrderByCustomerId(customerId, orderId)
+    const role = req.role
+    let data
+    if (role == CONSTANT.USER_ROLE.ADMIN) {
+       data = await orderService.getOrderByAdmin(orderId)
+    }
+    else {
+       data = await orderService.getOrderByCustomerId(customerId, orderId)
+    }
+    
     ERRORCODE.SUCCESSFUL.data = data
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {
@@ -85,7 +93,14 @@ const getOrder = async (req, res) => {
 const getOrderList = async (req, res) => {
   try {
     const customerId = req.id
-    const data = await orderService.getList({ customerID: new ObjectId(customerId) })
+    const role = req.role
+    let data
+    if (role == CONSTANT.USER_ROLE.ADMIN) {
+       data = await orderService.getList({})
+    }
+    else {
+      data = await orderService.getList({ customerID: new ObjectId(customerId) })
+    }
     ERRORCODE.SUCCESSFUL.data = data
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {

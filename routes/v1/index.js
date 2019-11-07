@@ -16,7 +16,7 @@ router.use('/category', category)
 router.use('/product', product)
 router.use('/tag', tag)
 router.use('/order', order)
-router.use('/varian', productVarian)
+router.use('/productVarian', productVarian)
 router.use('/comment', comment)
 
 module.exports = router

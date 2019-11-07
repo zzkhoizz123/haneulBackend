@@ -53,11 +53,27 @@ const getOrderByCustomerId = async (customerId, orderId) => {
     return data
 }
 
+const getOrderByAdmin = async (orderId) => {
+  const data = await orderModel.findOne({ _id: new ObjectId(orderId)})
+  console.log(data)
+  const varian = data.productVarianID
+  const lst = []
+  for (let item in varian) {
+      const temp = await productVarianModel.findOne({_id: new ObjectId(varian[item])})
+      lst.push(temp)
+  }
+  
+  data.productVarianID = lst 
+  return data
+}
+
+
 module.exports = {
     create,
     update,
     checkExist,
     getDetail,
     getList,
-    getOrderByCustomerId
+    getOrderByCustomerId,
+    getOrderByAdmin,
 }
