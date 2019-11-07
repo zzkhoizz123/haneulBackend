@@ -20,7 +20,9 @@ const createOrder = async (req, res) => {
     })
 
     if (data) {
-      await productVarianService.update({ _id: new ObjectId(productVarianID) }, { $inc: { stock: -1 } })
+      for (let item in productVarianID){
+        await productVarianService.update({ _id: new ObjectId(productVarianID[item]) }, { $inc: { stock: -1 } })
+      }
     }
 
     ERRORCODE.SUCCESSFUL.data = data
