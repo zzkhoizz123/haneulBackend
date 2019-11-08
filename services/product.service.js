@@ -51,17 +51,24 @@ const getProductById = async (id) => {
     for (const item in tagID) {
       tagList.push(await tagModel.findOne({ _id: new ObjectId(tagID[item]) }))
     }
+    let stock = 0
+    let averagePrice = 0
     for (const item in productVarianID) {
-      productVarianList.push(await productVarianModel.findById(productVarianID[item]))
+      let productVarian = await productVarianModel.findOne({ _id: productVarianID[item] })
+      productVarianList.push(productVarian)
+      stock += parseInt(productVarian.stock)
+      averagePrice += parseInt(productVarian.price)
     }
-
+    averagePrice = averagePrice / productVarianID.length
     ERRORCODE.SUCCESSFUL.data = {
       name: product.name,
       description: product.description,
       picture: product.picture,
       subcategory: subcategoryList,
       tag: tagList,
-      productVarian: productVarianList
+      productVarian: productVarianList,
+      averagePrice,
+      stock
     }
     return ERRORCODE.SUCCESSFUL
   } catch (error) {

@@ -27,12 +27,21 @@ const createProduct = async (req, res) => {
       varianList.push(varian._id)
     }
 
+    
+    let exec = []
+    for (const item in images) {
+      const result = await uploadCloudinary.decompressLZUTF8AndUploadStreamImage(product._id, images[item])
+      exec.push(result)
+    }
+    // await productService.update({ _id: product._id }, { imageURL: exec })
+
     const productTemp = {
       name: req.body.name,
       description: req.body.description,
       subcategoryID: req.body.subcategory,
       tagID: req.body.tag,
-      productVarianID: varianList
+      productVarianID: varianList,
+      imageURL: exec
     }
     const product = await productService.create(productTemp)
 
@@ -43,12 +52,12 @@ const createProduct = async (req, res) => {
       )
     }
 
-    let exec = []
-    for (const item in images) {
-      const result = await uploadCloudinary.decompressLZUTF8AndUploadStreamImage(product._id, images[item])
-      exec.push(result)
-    }
-    await productService.update({ _id: product._id }, { imageURL: exec })
+    // let exec = []
+    // for (const item in images) {
+    //   const result = await uploadCloudinary.decompressLZUTF8AndUploadStreamImage(product._id, images[item])
+    //   exec.push(result)
+    // }
+    // await productService.update({ _id: product._id }, { imageURL: exec })
     ERRORCODE.SUCCESSFUL.data = product
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {
