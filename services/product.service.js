@@ -63,7 +63,7 @@ const getProductById = async (id) => {
     ERRORCODE.SUCCESSFUL.data = {
       name: product.name,
       description: product.description,
-      picture: product.picture,
+      imageURL: product.imageURL,
       subcategory: subcategoryList,
       tag: tagList,
       productVarian: productVarianList,
