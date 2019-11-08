@@ -30,13 +30,20 @@ const getDetail = async (query, projection = {}) => {
 }
 
 const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANCE }, offset = 0, limit = CONSTANTS.LIMIT_QUERY) => {
-  const data = await orderModel.find(query, projection).sort(sort).skip(offset).limit(limit)
-      .populate({
-        path: 'productVarianID',
-        select: '-__v',
-        model: productVarianModel
-    })
-  return data
+  let orders = await orderModel.find(query, projection).lean()
+  console.log(orders)
+  
+  for (let item1 in orders) {
+    let lst = []
+    let order = orders[item1]
+    for (let item2 in order.productVarianID) {
+      let varian = await productVarianModel.findOne({ _id: new ObjectId(order.productVarianID[item2]) })
+      lst.push(varian)
+    }
+    orders[item1].productVarian = lst
+  }
+  
+  return orders
 }
 
 const getOrderByCustomerId = async (customerId, orderId) => {

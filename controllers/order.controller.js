@@ -94,6 +94,7 @@ const getOrderList = async (req, res) => {
   try {
     const customerId = req.id
     const role = req.role
+    console.log(role)
     let data
     if (role == CONSTANT.USER_ROLE.ADMIN) {
        data = await orderService.getList({})
