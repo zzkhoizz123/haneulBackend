@@ -124,15 +124,24 @@ const getProductByTime = async (productid) => {
       let stock = 0
       let averagePrice = 0
       let lst = []
+
       for (let item2 in product.productVarianID) {
         const productVarian = await productVarianModel.findOne({ _id: product.productVarianID[item2] })
         averagePrice += parseInt(productVarian.price)
         stock += parseInt(productVarian.stock)
         lst.push(productVarian)
       }
+
+      let lstSubcate = []
+      for (let item3 in product.subcategoryID) {
+        const sub = await subcategoryModel.findOne({ _id: new ObjectId(product.subcategoryID[item3]) })
+        lstSubcate.push(sub)
+      }
+
       products[item].averagePrice = averagePrice / products[item].productVarianID.length
       products[item].stock = stock
       products[item].productVarian = lst
+      products[item].subcategory = lstSubcate
     }
 
     ERRORCODE.SUCCESSFUL.data = products
