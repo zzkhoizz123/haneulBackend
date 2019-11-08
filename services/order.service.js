@@ -30,7 +30,12 @@ const getDetail = async (query, projection = {}) => {
 }
 
 const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANCE }, offset = 0, limit = CONSTANTS.LIMIT_QUERY) => {
-  const data = await orderModel.find(query, projection).sort(sort).skip(offset).limit(limit).lean()
+  const data = await orderModel.find(query, projection).sort(sort).skip(offset).limit(limit)
+      .populate({
+        path: 'productVarianID',
+        select: '-__v',
+        model: productVarianModel
+    })
   return data
 }
 

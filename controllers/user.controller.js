@@ -142,6 +142,18 @@ const getListUser = async (req, res) => {
   }
 }
 
+const getMe = async (req, res) => {
+  try {
+    const id = req.id
+    const user = await userService.getDetail({ _id: new ObjectId(id) })
+    ERRORCODE.SUCCESSFUL.data = user
+    return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+  } catch (error) {
+    console.log(error)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
 module.exports = {
   signin,
   signup,
@@ -149,5 +161,6 @@ module.exports = {
   changePassword,
   activateAccount,
   deactivateAccount,
-  getListUser
+  getListUser,
+  getMe
 }

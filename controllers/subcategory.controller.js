@@ -11,13 +11,16 @@ const createSubcategory = async (req, res) => {
       RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
     const name = req.body.name
+    if (!name) {
+      return RESPONSE.message(res, ERRORCODE.MISSING_FIELD)
+    }
     await subcategoryService.create({ name: name })
 
     ERRORCODE.SUCCESSFUL.data = { name: name }
-    RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+    return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (err) {
     console.log(err)
-    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+    return RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
 
