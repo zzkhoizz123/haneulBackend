@@ -41,7 +41,6 @@ const createProduct = async (req, res) => {
       subcategoryID: req.body.subcategory,
       tagID: req.body.tag,
       productVarianID: varianList,
-      imageURL: exec
     }
     const product = await productService.create(productTemp)
 

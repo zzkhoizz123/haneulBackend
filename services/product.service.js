@@ -79,7 +79,7 @@ const getProductById = async (id) => {
 
 const getProductBySubcategory = async (subcategoryID) => {
   try {
-    const product = productModel.find({ subcategoryID: new ObjectId(subcategoryID) })
+    const product = await productModel.find({ subcategoryID: subcategoryID })
     ERRORCODE.SUCCESSFUL.data = product
     return ERRORCODE.SUCCESSFUL
   } catch (error) {
