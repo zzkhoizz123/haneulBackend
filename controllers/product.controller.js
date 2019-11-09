@@ -20,8 +20,8 @@ const createProduct = async (req, res) => {
       const varianTemp = {
         color: varianInfo[item].color,
         size: varianInfo[item].size,
-        stock: varianInfo[item].stock,
-        price: varianInfo[item].price
+        stock: parseInt(varianInfo[item].stock),
+        price: parseInt(varianInfo[item].price)
       }
       const varian = await productVarianService.create(varianTemp)
       varianList.push(varian._id)
