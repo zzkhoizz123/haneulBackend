@@ -27,4 +27,6 @@ router.route('/remove').post(authenMiddleware.verifyToken, productController.rem
 
 router.route('/getProductByName').post(productController.getProductByName)
 
+router.route('/getProductByProductVarian').get(productController.getProductByProductVarian)
+
 module.exports = router

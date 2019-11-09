@@ -165,6 +165,18 @@ const getProductById = async (req, res) => {
   }
 }
 
+const getProductByProductVarian = async (req, res) => {
+  try {
+    const productVarianId = req.query.productVarianId
+    console.log(productVarianId)
+    const result = await productService.getProductByProductVarian(productVarianId)
+    RESPONSE.message(res, result)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
 const getProductBySubcategory = async (req, res) => {
   try {
     const subcategoryID = req.query.subcategoryID
@@ -248,5 +260,6 @@ module.exports = {
   addVarian,
   updateProduct,
   removeProduct,
-  getProductByName
+  getProductByName,
+  getProductByProductVarian
 }
