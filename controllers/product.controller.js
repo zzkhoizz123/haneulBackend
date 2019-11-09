@@ -224,6 +224,19 @@ const removeProduct = async (req, res) => {
     return RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
   }
 }
+
+const getProductByName = async (req, res) => {
+  try {
+    const name = req.query.name
+    const product = await productService.getDetail({ name: name })
+
+    ERRORCODE.SUCCESSFUL.data = product
+    RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
 module.exports = {
   createProduct,
   getProductByTime,
@@ -234,5 +247,6 @@ module.exports = {
   addTag,
   addVarian,
   updateProduct,
-  removeProduct
+  removeProduct,
+  getProductByName
 }

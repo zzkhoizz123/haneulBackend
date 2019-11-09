@@ -78,6 +78,12 @@ const updateCategory= async (categoryid, categoryName) => {
   return ERRORCODE.SUCCESSFUL
 }
 
+const getCategoryBySub= async (subcategoryID) => {
+  const category = await categoryModel.findOne({ subList: new ObjectId(subcategoryID) })
+  ERRORCODE.SUCCESSFUL.data = category
+  return ERRORCODE.SUCCESSFUL
+}
+
 module.exports = {
     create,
     update,
@@ -87,5 +93,6 @@ module.exports = {
     addSubToCategory,
     getAllCategory,
     updateCategory,
-    removeCategory
+    removeCategory,
+    getCategoryBySub
 }

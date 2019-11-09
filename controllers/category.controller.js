@@ -102,11 +102,24 @@ const removeCategory = async (req, res) => {
   }
 }
 
+const getCategoryBySub = async (req, res) => {
+  try {
+    const { subcategoryID } = req.query
+    const result = await categoryService.getCategoryBySub(subcategoryID)
+
+    RESPONSE.message(res, result)
+  } catch (err) {
+    console.log(err)
+    RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
+  }
+}
+
 module.exports = {
   createCategory,
   getAllCategory,
   addSubToCategory,
   getCategory,
   removeCategory,
-  updateCategory
+  updateCategory,
+  getCategoryBySub
 }

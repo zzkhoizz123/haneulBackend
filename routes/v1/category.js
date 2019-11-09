@@ -7,7 +7,7 @@ const router = new Router()
 
 router.route('/').post(authenMiddleware.verifyToken, categoryController.createCategory)
 router.route('/').get(categoryController.getCategory)
-router.route('/getCategoryBySub').get(categoryController.getCategory)
+router.route('/getCategoryBySub').get(categoryController.getCategoryBySub)
 router.route('/getAll').get(categoryController.getAllCategory)
 router.route('/addSubToCategory').post(authenMiddleware.verifyToken, categoryController.addSubToCategory)
 router.route('/update').post(authenMiddleware.verifyToken, categoryController.updateCategory)
