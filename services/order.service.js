@@ -15,7 +15,7 @@ const create = async (cropInfo) => {
 }
 
 const update = async (query, query2) => {
-  const data = await orderModel.findOneAndUpdate(query, query2, { newc: true })
+  const data = await orderModel.update(query, query2)
   return
 }
 

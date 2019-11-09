@@ -11,7 +11,7 @@ router.route('/draftOrder').post(authenMiddleware.verifyToken, orderController.d
 
 router.route('/confirmOrder').post(authenMiddleware.verifyToken, orderController.confirmOrder)
 
-router.route('/cancelledOrder').post(authenMiddleware.verifyToken, orderController.confirmOrder)
+router.route('/cancelledOrder').post(authenMiddleware.verifyToken, orderController.cancelledOrder)
 
 router.route('/getOrder').get(authenMiddleware.verifyToken, orderController.getOrder)
 
