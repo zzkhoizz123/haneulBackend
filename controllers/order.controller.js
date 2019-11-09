@@ -100,7 +100,7 @@ const getOrderList = async (req, res) => {
        data = await orderService.getList({})
     }
     else {
-      data = await orderService.getList({ customerID: new ObjectId(customerId) })
+      data = await orderService.getList({ customerID: customerId })
     }
     ERRORCODE.SUCCESSFUL.data = data
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
