@@ -79,43 +79,37 @@ const getProductById = async (id) => {
 
 const getProductBySubcategory = async (subcategoryId) => {
   try {
-    const product = await productModel.findOne({ subcategoryID: subcategoryId })
+    const products = await productModel.find({ subcategoryID: subcategoryId }).lean()
+    
+    for (let item in products) {
+      const product = products[item]
+      let stock = 0
+      let averagePrice = 0
+      let lst = []
 
-    const subcategoryID = product.subcategoryID
-    const tagID = product.tagID
-    const productVarianID = product.productVarianID
+      for (let item2 in product.productVarianID) {
+        const productVarian = await productVarianModel.findOne({ _id: product.productVarianID[item2] })
+        averagePrice += parseInt(productVarian.price)
+        stock += parseInt(productVarian.stock)
+        lst.push(productVarian)
+      }
 
-    const subcategoryList = []
-    const tagList = []
-    const productVarianList = []
+      let lstSubcate = []
+      for (let item3 in product.subcategoryID) {
+        const sub = await subcategoryModel.findOne({ _id: new ObjectId(product.subcategoryID[item3]) })
+        lstSubcate.push(sub)
+      }
 
-    for (const item in subcategoryID) {
-      subcategoryList.push(await subcategoryModel.findOne({ _id: new ObjectId(subcategoryID[item]) }))
+      products[item].averagePrice = averagePrice / products[item].productVarianID.length
+      products[item].stock = stock
+      products[item].productVarian = lst
+      products[item].subcategory = lstSubcate
     }
-    for (const item in tagID) {
-      tagList.push(await tagModel.findOne({ _id: new ObjectId(tagID[item]) }))
-    }
-    let stock = 0
-    let averagePrice = 0
-    for (const item in productVarianID) {
-      let productVarian = await productVarianModel.findOne({ _id: productVarianID[item] })
-      productVarianList.push(productVarian)
-      stock += parseInt(productVarian.stock)
-      averagePrice += parseInt(productVarian.price)
-    }
-    averagePrice = averagePrice / productVarianID.length
-    ERRORCODE.SUCCESSFUL.data = {
-      name: product.name,
-      description: product.description,
-      imageURL: product.imageURL,
-      subcategory: subcategoryList,
-      tag: tagList,
-      productVarian: productVarianList,
-      averagePrice,
-      stock
-    }
+
+    ERRORCODE.SUCCESSFUL.data = products
     return ERRORCODE.SUCCESSFUL
   } catch (error) {
+    console.log(error)
     return ERRORCODE.ERROR_SERVER
   }
 }
