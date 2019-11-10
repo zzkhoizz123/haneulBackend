@@ -133,7 +133,7 @@ const getListUser = async (req, res) => {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
       RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
-    const userList = await userService.getList({ role: CONSTANT.USER_ROLE.ADMIN }, { password: CONSTANT.DISAPPEARANCE })
+    const userList = await userService.getList({ role: CONSTANT.USER_ROLE.CUSTOMER }, { password: CONSTANT.DISAPPEARANCE })
     ERRORCODE.SUCCESSFUL.data = userList
     return RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
   } catch (error) {
