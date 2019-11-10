@@ -239,7 +239,7 @@ const removeProduct = async (req, res) => {
 
 const getProductByName = async (req, res) => {
   try {
-    const name = req.query.name
+    const name = req.body.name
     const product = await productService.getDetail({ name: name })
 
     ERRORCODE.SUCCESSFUL.data = product
