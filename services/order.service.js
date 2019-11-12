@@ -37,10 +37,13 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
     let lst = []
     let productList = []
     let order = orders[item1]
-    for (let item2 in order.productVarianID) {
-      let varian = await productVarianModel.findOne({ _id: new ObjectId(order.productVarianID[item2]) })
-      let product = await productModel.findOne({ productVarianID: new ObjectId(order.productVarianID[item2]) })
-      lst.push(varian)
+    for (let item2 in order.productVarianList) {
+      let varian = await productVarianModel.findOne({ _id: new ObjectId(order.productVarianList[item2].productVarianID) })
+      let product = await productModel.findOne({ productVarianID: new ObjectId(order.productVarianList[item2].productVarianID) })
+      lst.push({
+        varian,
+        number: order.productVarianList[item2].number
+      })
       productList.push(product)
     }
     orders[item1].productVarian = lst

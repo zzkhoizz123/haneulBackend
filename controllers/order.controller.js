@@ -8,20 +8,21 @@ const productVarianService = require('../services/productVarian.service')
 
 const createOrder = async (req, res) => {
   try {
-    const { productVarianID, phoneNumber, address, message, totalPrice } = req.body
+    const { productVarianList, phoneNumber, address, message, totalPrice } = req.body
     const customerId = req.id
     const data = await orderService.create({
       customerID: customerId,
-      productVarianID: productVarianID,
+      productVarianList: productVarianList,
       phoneNumber: phoneNumber,
       address: address,
       message: message,
       totalPrice: totalPrice
     })
-
+    console.log(productVarianList)
     if (data) {
-      for (let item in productVarianID){
-        await productVarianService.update({ _id: new ObjectId(productVarianID[item]) }, { $inc: { stock: -1 } })
+      for (let item in productVarianList){
+        let number = - parseInt(productVarianList[item].number)
+        await productVarianService.update({ _id: new ObjectId(productVarianList[item].productVarianID) }, { $inc: { stock: number } })
       }
     }
 
