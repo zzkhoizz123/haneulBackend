@@ -202,11 +202,18 @@ const updateProduct = async (req, res) => {
     if (req.role !== CONSTANT.USER_ROLE.ADMIN) {
       return RESPONSE.message(res, ERRORCODE.DO_NOT_HAVE_PERMISSION)
     }
-    const { name, description, picture, productId} = req.body
+    const { name, description, images, productId} = req.body
     let update = {}
     if (name) update.name = name
     if (description) update.description = description
-    if (picture) update.picture = picture
+    if (images) {
+      let exec = []
+      for (const item in images) {
+        const result = await uploadCloudinary.decompressLZUTF8AndUploadStreamImage(productId, images[item])
+        exec.push(result)
+      }
+      update.imageURL = exec
+    }
 
     await productService.update({ _id: new ObjectId(productId) }, { $set: update })
     RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
