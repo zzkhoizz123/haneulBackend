@@ -77,6 +77,49 @@ const getProductById = async (id) => {
   }
 }
 
+const getProductByName = async (name) => {
+  try {
+    const product = await productModel.findOne({ name: name })
+    const subcategoryID = product.subcategoryID
+    const tagID = product.tagID
+    const productVarianID = product.productVarianID
+
+    const subcategoryList = []
+    const tagList = []
+    const productVarianList = []
+
+    for (const item in subcategoryID) {
+      subcategoryList.push(await subcategoryModel.findOne({ _id: new ObjectId(subcategoryID[item]) }))
+    }
+    for (const item in tagID) {
+      tagList.push(await tagModel.findOne({ _id: new ObjectId(tagID[item]) }))
+    }
+    let stock = 0
+    let averagePrice = 0
+    for (const item in productVarianID) {
+      let productVarian = await productVarianModel.findOne({ _id: productVarianID[item] })
+      productVarianList.push(productVarian)
+      stock += parseInt(productVarian.stock)
+      averagePrice += parseInt(productVarian.price)
+    }
+    averagePrice = averagePrice / productVarianID.length
+    ERRORCODE.SUCCESSFUL.data = {
+      name: product.name,
+      description: product.description,
+      imageURL: product.imageURL,
+      subcategory: subcategoryList,
+      tag: tagList,
+      productVarian: productVarianList,
+      averagePrice,
+      stock
+    }
+    return ERRORCODE.SUCCESSFUL
+  } catch (error) {
+    console.log(eror)
+    return ERRORCODE.ERROR_SERVER
+  }
+}
+
 const getProductByProductVarian = async (id) => {
   try {
     const product = await productModel.findOne({ productVarianID: new ObjectId(id) })
@@ -235,5 +278,6 @@ module.exports = {
   getProductByTag,
   removeProduct,
   getProductByTime,
-  getProductByProductVarian
+  getProductByProductVarian,
+  getProductByName
 }

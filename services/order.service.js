@@ -56,33 +56,39 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
 const getOrderByCustomerId = async (customerId, orderId) => {
     const data = await orderModel.findOne({customerID: customerId, _id: new ObjectId(orderId)})
     console.log(data)
-    const varian = data.productVarianID
+    const varian = data.productVarianList
     const lst = []
     for (let item in varian) {
-        const temp = await productVarianModel.findOne({_id: new ObjectId(varian[item])})
+        const temp = await productVarianModel.findOne({_id: new ObjectId(varian[item].productVarianID)})
                     .populate({
                         path: 'productID',
                         select: '-__v',
                         model: productModel
                     })
-        lst.push(temp)
+        lst.push({
+          varian: temp,
+          number: varian[item].number
+        })
     }
     
-    data.productVarianID = lst 
+    data.productVarianList = lst 
     return data
 }
 
 const getOrderByAdmin = async (orderId) => {
   const data = await orderModel.findOne({ _id: new ObjectId(orderId)})
   console.log(data)
-  const varian = data.productVarianID
+  const varian = data.productVarianList
   const lst = []
   for (let item in varian) {
-      const temp = await productVarianModel.findOne({_id: new ObjectId(varian[item])})
-      lst.push(temp)
+      const temp = await productVarianModel.findOne({_id: new ObjectId(varian[item].productVarianID)})
+      lst.push({ 
+        varian: temp,
+        number: varian[item].number
+      })
   }
   
-  data.productVarianID = lst 
+  data.productVarianList = lst 
   return data
 }
 
