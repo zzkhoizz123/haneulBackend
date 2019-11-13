@@ -156,7 +156,6 @@ const getProductByTime = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const id = req.query.id
-    console.log(id)
     const result = await productService.getProductById(id)
     RESPONSE.message(res, result)
   } catch (err) {
@@ -168,7 +167,6 @@ const getProductById = async (req, res) => {
 const getProductByProductVarian = async (req, res) => {
   try {
     const productVarianId = req.query.productVarianId
-    console.log(productVarianId)
     const result = await productService.getProductByProductVarian(productVarianId)
     RESPONSE.message(res, result)
   } catch (err) {

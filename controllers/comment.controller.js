@@ -23,7 +23,6 @@ const createComment = async (req, res) => {
 const getCommentOfProduct = async (req, res) => {
   try {
     const { flag, productId } = req.body
-    console.log(productId)
     if (!flag || !productId) {
       return RESPONSE.message(res, ERRORCODE.MISSING_FIELD)
     }

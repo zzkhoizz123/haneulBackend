@@ -31,7 +31,6 @@ const getDetail = async (query, projection = {}) => {
 
 const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANCE }, offset = 0, limit = CONSTANTS.LIMIT_QUERY) => {
   let orders = await orderModel.find(query, projection).lean()
-  console.log(orders)
   
   for (let item1 in orders) {
     let lst = []
@@ -55,7 +54,6 @@ const getList = async (query, projection, sort = { createAt: CONSTANTS.APPEARANC
 
 const getOrderByCustomerId = async (customerId, orderId) => {
     const data = await orderModel.findOne({customerID: customerId, _id: new ObjectId(orderId)})
-    console.log(data)
     const varian = data.productVarianList
     const lst = []
     for (let item in varian) {
@@ -77,7 +75,6 @@ const getOrderByCustomerId = async (customerId, orderId) => {
 
 const getOrderByAdmin = async (orderId) => {
   const data = await orderModel.findOne({ _id: new ObjectId(orderId)})
-  console.log(data)
   const varian = data.productVarianList
   const lst = []
   for (let item in varian) {

@@ -42,7 +42,6 @@ const addSubToCategory = async (subcategoryId, categoryId) => {
 const getAllCategory = async () => {
   const cateLst = await categoryModel.find({})
   const lst = []
-  console.log(cateLst)
   for (let item in cateLst) {
     let obj = {
       id: cateLst[item]._id,
