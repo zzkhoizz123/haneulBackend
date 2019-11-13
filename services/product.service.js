@@ -80,6 +80,7 @@ const getProductById = async (id) => {
 const getProductByName = async (name) => {
   try {
     const product = await productModel.findOne({ name: name })
+    console.log(product)
     const subcategoryID = product.subcategoryID
     const tagID = product.tagID
     const productVarianID = product.productVarianID

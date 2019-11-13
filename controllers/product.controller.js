@@ -238,10 +238,9 @@ const removeProduct = async (req, res) => {
 const getProductByName = async (req, res) => {
   try {
     const name = req.body.name
-    const product = await productService.getProductByName(name)
+    const result = await productService.getProductByName(name)
 
-    ERRORCODE.SUCCESSFUL.data = product
-    RESPONSE.message(res, ERRORCODE.SUCCESSFUL)
+    RESPONSE.message(res, result)
   } catch (err) {
     console.log(err)
     RESPONSE.message(res, ERRORCODE.ERROR_SERVER)
