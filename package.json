@@ -23,7 +23,7 @@
     "http-graceful-shutdown": "^2.3.2",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
-    "log4js": "^4.0.2",
+    "log4js": "^6.4.0",
     "lzutf8": "^0.5.5",
     "mongoose": "^5.7.1",
     "morgan": "^1.9.1",
